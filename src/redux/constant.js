@@ -143,16 +143,19 @@ export const SIDEBAR_MENU = [
         title: 'Nạp tiền',
         icon: Dollar,
         to: 'https://t.me/HUYENCHO1',
+        auth: true,
     },
     {
         title: 'Rút tiền',
         icon: Dollar,
         to: '/withdraw',
+        auth: true,
     },
     {
         title: 'Trang cá nhân',
         icon: UserIcon,
         to: '/profile',
+        auth: true,
     },
     /* {
         title: '#zingchart',
@@ -175,11 +178,11 @@ export const SIDEBAR_MENU = [
         spederate: true,
         to: '/new-songs',
     },
-    /*  {
+    {
         title: 'Thể Loại',
         icon: Category,
         to: '/category',
-    }, */
+    },
     {
         title: 'Top 100',
         icon: Star,

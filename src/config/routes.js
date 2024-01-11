@@ -24,6 +24,7 @@ const config = {
     withdraw: {
         component: Home,
         path: '/withdraw',
+        auth: true,
     },
 
     myplayer: {
@@ -34,6 +35,7 @@ const config = {
     account: {
         component: AccountPage,
         path: ':nickname',
+        auth: true,
         // layout: AccountLayout,
     },
     zingchart: {

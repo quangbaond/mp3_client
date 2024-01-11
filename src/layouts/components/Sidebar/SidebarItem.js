@@ -4,11 +4,13 @@ import classNames from 'classnames/bind';
 import Button from '../../../components/Button';
 import styles from './Sidebar.module.scss';
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { sidebarSlice } from '../../../redux/sliceReducer';
+import { combinedStatusSelector } from '../../../redux/selector';
 const cx = classNames.bind(styles);
 function SidebarItem({ data, onClick, isActive, dataset, isTablet, isOpenSideBar }) {
     const dispatch = useDispatch();
+    const { isLogin, dataUser } = useSelector(combinedStatusSelector);
 
     return (
         <>
@@ -18,6 +20,7 @@ function SidebarItem({ data, onClick, isActive, dataset, isTablet, isOpenSideBar
                     isActive ? 'isActive' : '',
                     isOpenSideBar && 'poup_tablet_item',
                 )}
+                style={data.auth && !dataUser.accessToken ? { display: 'none' } : {}}
                 onClick={() => {
                     if (data.to === '/withdraw') {
                         dispatch(sidebarSlice.actions.setWithDraw(true));

@@ -179,7 +179,7 @@ function Form() {
                 dispatch(loginSlice.actions.setAccessToken(access_token));
                 toast.success('Đăng nhập thành công !!!');
             } catch (err) {
-                if (err.response.status === 400) {
+                if (err.response.status === 422) {
                     toast.error('Sai tên đăng nhập hoặc mật khẩu !!!');
                 }
             }
