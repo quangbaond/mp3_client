@@ -1,6 +1,6 @@
 const images = {
     usersDefault:
-        'https://static-zmp3.zmdcdn.me/skins/zmp3-mobile-v5.2/images/avatar_mobile.png',
+        'https://fs1.vitanedu.net/800x0/crop/file/R1VJREUvMTExMDAwNzY0LzIwMjIvMDgvMDUvYTdhYjc0MjRjYmNhNDE4YmIzMjc1MDRjY2QxODk0MDIvNjM3OTUyOTYxNTIxODk0MjYzLmpwZw/file-637952961521894263.jpg',
     imgDefault: require('../assets/images/no-image.png'),
     iconTheme: require('../assets/images/icontheme.png'),
     bannerSlider: [

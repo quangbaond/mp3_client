@@ -181,7 +181,7 @@ function AccountPage() {
                                         </Form.Item>
                                     </Col>
                                     <Col md={12} sm={24} xs={24}>
-                                        <Form.Item label="Vip:" name="Vip" >
+                                        <Form.Item label="Số điểm:" name="point" >
                                             <Input disabled={true} />
                                         </Form.Item>
                                     </Col>
@@ -194,9 +194,7 @@ function AccountPage() {
                             <Table scroll={{ x: 500, y: 500 }} columns={columns} dataSource={withdrawList} />
                         </Card>
                     </Col>
-
                 </Row>
-
             </div>
         </div>
     );

@@ -1,14 +1,14 @@
 import * as httpRequest from '../untils/request';
 import * as httpRequest2 from '../untils/request2';
 
-export const getUserLogin = async (email, password) => {
+export const getUserLogin = async (user_name, password) => {
     const result = await httpRequest2.post('/auth/login', {
-        email: email,
+        user_name: user_name,
         password: password,
     });
     return result;
 };
-export const setUserRegister = async (userName, passwordConfirm, email) => {
+export const setUserRegister = async (userName, passwordConfirm, phone, name) => {
     // const result = await httpRequest.post('/account/register/', {
     //     userName: userName,
     //     email: email,
@@ -18,9 +18,10 @@ export const setUserRegister = async (userName, passwordConfirm, email) => {
     // console.log(result);
 
     const result = await httpRequest2.post('/auth/register', {
-        email: email,
+        phone: phone,
         password: passwordConfirm,
         user_name: userName,
+        name: name,
     });
 
     return result;

@@ -10,6 +10,7 @@ import { getUserLogin, setUserRegister } from '../../services/userApi';
 import Button from '../Button';
 import { Close, Loading } from '../Icons';
 import styles from './Form.module.scss';
+import { useResetIconStyle } from 'antd/es/theme/internal';
 
 const cx = classNames.bind(styles);
 
@@ -19,9 +20,10 @@ function Form() {
     const { isLogin } = useSelector(combinedStatusSelector);
     // form
     const [user, setUser] = useState('');
+    const [name, setName] = useState('');
     const [password, setPassword] = useState('');
     const [passwordConfirm, setPasswordConfirm] = useState('');
-    const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState('');
 
     //Login
     const [isLoginForm, setIsLogin] = useState(isLogin);
@@ -34,7 +36,7 @@ function Form() {
         setIsLogin(!isLoginForm);
         setValidMsgError(false);
         setUser('');
-        setEmail('');
+        setPhone('');
         setPassword('');
         setPasswordConfirm('');
     };
@@ -59,6 +61,16 @@ function Form() {
             });
         }
     };
+    const onTypeName = (e) => {
+        setName(e.target.value);
+
+        if (e.target.value) {
+            setValidMsgError((prev) => {
+                return { ...prev, name: '' };
+            });
+        }
+    };
+
     const onTypePassWordConfirm = (e) => {
         setPasswordConfirm(e.target.value);
         if (e.target.value) {
@@ -67,11 +79,11 @@ function Form() {
             });
         }
     };
-    const onTypeEmail = (e) => {
-        setEmail(e.target.value);
+    const onTypePhone = (e) => {
+        setPhone(e.target.value);
         if (e.target.value) {
             setValidMsgError((prev) => {
-                return { ...prev, email: '' };
+                return { ...prev, phone: '' };
             });
         }
     };
@@ -80,13 +92,8 @@ function Form() {
         const msg = {};
 
         if (isLoginForm) {
-            if (isEmpty(email)) {
-                msg.email = 'Vui lòng nhập email';
-            } else {
-                const regexEmail = new RegExp(
-                    '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$',
-                );
-                if (!regexEmail.test(email)) msg.email = 'Vui Lòng Nhập Đúng Email';
+            if (isEmpty(user)) {
+                msg.user = 'Vui lòng nhập tên tài khoản';
             }
             if (isEmpty(password)) {
                 msg.password = 'Vui lòng nhập mật khẩu';
@@ -120,13 +127,12 @@ function Form() {
                 if (!regexUser.test(user)) msg.user = 'User phải từ 8 - 20 kí tự';
             }
 
-            if (isEmpty(email)) {
-                msg.email = 'Vui lòng nhập email';
-            } else {
-                const regexEmail = new RegExp(
-                    '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$',
-                );
-                if (!regexEmail.test(email)) msg.email = 'Vui Lòng Nhập Đúng Email';
+            if (isEmpty(phone)) {
+                msg.phone = 'Vui lòng nhập số điện thoại';
+            }
+
+            if (isEmpty(name)) {
+                msg.name = 'Vui lòng nhập họ và tên';
             }
         }
 
@@ -145,7 +151,7 @@ function Form() {
         const fetchSubmit = async () => {
             setLoadingForm(true);
             try {
-                await setUserRegister(user, passwordConfirm, email);
+                await setUserRegister(user, passwordConfirm, phone, name);
 
                 toast.success('Tạo tài khoản thành công !!!');
                 setIsLogin(true);
@@ -168,7 +174,7 @@ function Form() {
         const fetchLogin = async () => {
             setLoadingForm(true);
             try {
-                const response = await getUserLogin(email, password);
+                const response = await getUserLogin(user, password);
                 const data = await response.data;
                 const { access_token } = data.jwt;
                 const user = {
@@ -219,29 +225,29 @@ function Form() {
                         ///////////////
                         <div className={cx('form')}>
                             <div className={cx('form_input')}>
-                                <label className={cx('form_label')} htmlFor="email">
-                                    Email
+                                <label className={cx('form_label')} htmlFor="user">
+                                    Tên đăng nhập
                                 </label>
                                 <input
                                     className={cx(
                                         'input_form',
-                                        validMsgError.email ? 'invalid' : '',
+                                        validMsgError.user ? 'invalid' : '',
                                     )}
-                                    value={email}
-                                    placeholder="Nhập email..."
-                                    type="email"
-                                    id="email"
-                                    onChange={onTypeEmail}
+                                    value={user}
+                                    placeholder="Nhập tên tài khoản"
+                                    type="text"
+                                    id="user"
+                                    onChange={onTypeUser}
                                 />
 
                                 <span className={cx('messenger_error')}>
-                                    {validMsgError.email}{' '}
+                                    {validMsgError.user}{' '}
                                 </span>
                             </div>
 
                             <div className={cx('form_input')}>
                                 <label className={cx('form_label')} htmlFor="password">
-                                    Password
+                                    Mật khẩu
                                 </label>
                                 <input
                                     type="password"
@@ -267,7 +273,7 @@ function Form() {
                         <div className={cx('form')}>
                             <div className={cx('form_input')}>
                                 <label className={cx('form_label')} htmlFor="userName">
-                                    User
+                                    Tên đăng nhập
                                 </label>
                                 <input
                                     type="text"
@@ -285,10 +291,30 @@ function Form() {
                                     {validMsgError.user}{' '}
                                 </span>
                             </div>
+                            <div className={cx('form_input')}>
+                                <label className={cx('form_label')} htmlFor="name">
+                                    Họ và tên
+                                </label>
+                                <input
+                                    type="text"
+                                    id="userName"
+                                    placeholder="Họ và tên"
+                                    className={cx(
+                                        'input_form',
+                                        validMsgError.name ? 'invalid' : '',
+                                    )}
+                                    value={name}
+                                    onChange={onTypeName}
+                                />
+
+                                <span className={cx('messenger_error')}>
+                                    {validMsgError.name}{' '}
+                                </span>
+                            </div>
 
                             <div className={cx('form_input')}>
                                 <label className={cx('form_label')} htmlFor="password">
-                                    Password
+                                    Mật khẩu
                                 </label>
                                 <input
                                     type="password"
@@ -312,7 +338,7 @@ function Form() {
                                     className={cx('form_label')}
                                     htmlFor="password_confirm"
                                 >
-                                    Password Confirm
+                                    Xác nhận mật khẩu
                                 </label>
                                 <input
                                     type="password"
@@ -332,23 +358,23 @@ function Form() {
                             </div>
 
                             <div className={cx('form_input')}>
-                                <label className={cx('form_label')} htmlFor="email">
-                                    Email
+                                <label className={cx('form_label')} htmlFor="phone">
+                                    Số điện thoại
                                 </label>
                                 <input
                                     className={cx(
                                         'input_form',
-                                        validMsgError.email ? 'invalid' : '',
+                                        validMsgError.phone ? 'invalid' : '',
                                     )}
-                                    value={email}
-                                    placeholder="Nhập email..."
-                                    type="email"
-                                    id="email"
-                                    onChange={onTypeEmail}
+                                    value={phone}
+                                    placeholder="Nhập số điện thoại"
+                                    type="text"
+                                    id="phone"
+                                    onChange={onTypePhone}
                                 />
 
                                 <span className={cx('messenger_error')}>
-                                    {validMsgError.email}
+                                    {validMsgError.phone}
                                 </span>
                             </div>
                         </div>
@@ -364,7 +390,7 @@ function Form() {
                             className={cx('bottom_btn_register')}
                             onClick={onChangeForm}
                         >
-                            {isLoginForm ? 'Đăng Kí' : 'Đăng Nhập'}
+                            {isLoginForm ? 'Đăng Ký' : 'Đăng Nhập'}
                         </span>
                     </div>
 

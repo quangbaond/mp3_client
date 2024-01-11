@@ -5,18 +5,18 @@ import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import Button from '../../../components/Button/Button';
-import { ArrowChevonLeft, ArrowChevonRight, Close } from '../../../components/Icons';
+import { ArrowChevonLeft, ArrowChevonRight, Close, Dollar } from '../../../components/Icons';
 import Images from '../../../components/Image';
 import { SIDEBAR_MENU } from '../../../redux/constant';
 import { combinedStatusSelector } from '../../../redux/selector';
 import { loginSlice, sidebarSlice, statusSlice } from '../../../redux/sliceReducer';
 import styles from './Sidebar.module.scss';
 import SidebarItem from './SidebarItem';
-import { useState } from 'react';
-
+import { useEffect, useState } from 'react';
 const cx = classNames.bind(styles);
 
 function Sidebar() {
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { idActive, dataUser, isSidebarMobile, isWithDraw } = useSelector(combinedStatusSelector);
@@ -24,8 +24,26 @@ function Sidebar() {
     const imgError =
         'https://digimedia.web.ua.pt/wp-content/uploads/2017/05/default-user-image.png';
 
+    console.log('dataUser', dataUser?.data?.balance);
 
     const RenderMenuMain = ({ isTablet }) => {
+        if (dataUser?.data?.user_name) {
+            if (SIDEBAR_MENU.findIndex(item => item?.id == 1) < 0) {
+                SIDEBAR_MENU.unshift({
+                    title: dataUser?.data?.balance ? `Số dư: ${dataUser?.data?.balance} VND` : 'Số dư: 0 VND',
+                    id: 1,
+                    icon: Dollar,
+                    to: '/',
+                });
+                SIDEBAR_MENU.unshift({
+                    title: dataUser?.data?.point ? `Số điểm: ${dataUser?.data?.point} điểm` : 'Số điểm: 0 điểm',
+                    id: 1,
+                    icon: Dollar,
+                    to: '/',
+                });
+            }
+        }
+
         const result = SIDEBAR_MENU.map((item, index) => {
             const handleClickActive = (e, index) => {
                 if (

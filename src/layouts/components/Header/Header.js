@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import Media from 'react-media';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
@@ -76,6 +76,19 @@ function Header({ styles, isScrollHeader }) {
     const handleSidbar = () => {
         dispatch(statusSlice.actions.isSidebarMobile(!isSidebarMobile));
     };
+    useEffect(() => {
+        // console.log(dataUser.data.user_name)
+        if (dataUser?.data?.user_name) {
+            if (MENU_USER_HEADER.findIndex(item => item?.id == 1) < 0) {
+                MENU_USER_HEADER.unshift({
+                    title: dataUser?.data?.user_name ? dataUser?.data?.user_name : 'Đăng nhập',
+                    id: 1,
+                    to: '/profile',
+                });
+            }
+        }
+
+    }, [dataUser?.data?.user_name]);
 
     return (
         <Media query="(max-width: 600px)">
