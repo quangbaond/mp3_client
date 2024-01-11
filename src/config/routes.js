@@ -6,7 +6,7 @@ import NewSongs from '../pages/NewSongs';
 import Trending from '../pages/Trending';
 import Category from '../pages/Category';
 import Zingchart from '../pages/Zingchart';
-import MyPlayer from '../pages/MyPlayer/';/* 
+import MyPlayer from '../pages/MyPlayer/';/*
 import Following from '../pages/Following'; */
 import Top100 from '../pages/Top100/Top100';
 import AlbumSinger from '../pages/AlbumSinger';
@@ -14,12 +14,18 @@ import AccountPage from '../pages/Account/Account';
 import { AccountLayout, NewSongLayout } from '../layouts';
 import ArtistBanner from '../pages/ArtistBanner/ArtistBanner';
 import Radio from '../pages/Radio/Radio';
+// import Profile from '../pages/Profile/Profile';
 
 const config = {
     home: {
         component: Home,
         path: '/',
     },
+    withdraw: {
+        component: Home,
+        path: '/withdraw',
+    },
+
     myplayer: {
         component: MyPlayer,
         path: 'my-player',
@@ -28,7 +34,7 @@ const config = {
     account: {
         component: AccountPage,
         path: ':nickname',
-        layout: AccountLayout,
+        // layout: AccountLayout,
     },
     zingchart: {
         component: Zingchart,
@@ -69,7 +75,7 @@ const config = {
         path: 'my-player/artist',
     },
     top100: {
-        component:  Top100,
+        component: Top100,
         path: 'top-100-song',
     },
     errorpage: {

@@ -9,18 +9,21 @@ import styles from './PlayListSong.module.scss';
 import Menu from '../layouts/components/Menu/Menu';
 import WaveSong from '../components/Icons/WaveSong';
 import { combindStatusRadio, combinedStatusSelector } from '../redux/selector';
-import { Download, Heart, HeartFull, More, Play } from '../components/Icons';
+import { Download, Heart, HeartFull, More, Play, Vote } from '../components/Icons';
 import { featureSlice, loginSlice, radioSlice, statusSlice } from '../redux/sliceReducer';
 import {
     createSongFavoriteUser,
     getSongFavorite,
     removeSongFavoriteUser,
 } from '../services/userApi';
+import { Avatar, Form, InputNumber, Modal } from 'antd';
+import { useNavigate } from "react-router-dom";
+import { request } from '../untils/request2';
 
 const cx = classNames.bind(styles);
 
 export const ActionBtnAlbum = ({
-    item, 
+    item,
     isLivingAlbum,
     singleBtn,
     song,
@@ -29,12 +32,13 @@ export const ActionBtnAlbum = ({
     playlistSong,
     isListQueue,
     sizeTablet,
-    modalControls  , 
+    modalControls,
 }) => {
     const dispatch = useDispatch();
     const { slugDataBanner, dataSongs, isPlaying, songCurrent, dataUser } =
         useSelector(combinedStatusSelector); // slug_name in
     const { isPlayingRadio } = useSelector(combindStatusRadio);
+    const [openModalVote, setOpenModalVote] = useState(false);
 
     const isSlugCategory = slugDataBanner === item?.slug_banner_album_hot;
     const isSlugNameSinger = slugDataBanner === item?.slug_banner_singer_popular;
@@ -47,6 +51,31 @@ export const ActionBtnAlbum = ({
     const [isFavorite, setIsFavorite] = useState();
     const [isMore, setIsMore] = useState(false);
     const [callData, setCallData] = useState(false);
+
+    const [form] = Form.useForm();
+    const voting = async (values) => {
+        if (dataUser.data < values.vote) {
+            toast.error('Số phiếu không được lớn hơn số phiếu hiện có!');
+            return
+        }
+        const vote = await request.post('/vote', { ...values, id: item._id, amount: values.vote }, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${dataUser.accessToken}`,
+            },
+        });
+
+        if (vote.status === 200) {
+            setOpenModalVote(false);
+            dispatch(loginSlice.actions.setBalance(dataUser.data.balance - values.vote));
+            toast.success('Cảm ơn bạn đã bỏ phiếu!');
+            return
+        }
+
+        toast.info('Có lỗi xảy ra, vui lòng thử lại sau!');
+
+    }
+    const navigate = useNavigate();
     //***handleEvent******/
 
     const addSongFavorite = async () => {
@@ -82,16 +111,23 @@ export const ActionBtnAlbum = ({
         setIsMore(true);
     };
     const BUTTON_HOVER = [
+        // {
+        //     extraTitle: isFavorite ? 'Xóa khỏi thư viện ' : 'Thêm vào thư viện',
+        //     icon: isFavorite ? HeartFull : Heart,
+        //     circle_hide: true,
+        //     type: 'like',
+        // },
         {
-            extraTitle: isFavorite ? 'Xóa khỏi thư viện ' : 'Thêm vào thư viện',
+            extraTitle: isFavorite ? 'Bỏ Quan tâm ' : 'Quan tâm',
             icon: isFavorite ? HeartFull : Heart,
             circle_hide: true,
             type: 'like',
         },
+
         {
             icon:
                 (isSlugCategory && isSlugCategoryCurrent && isPlaying) ||
-                (isSlugNameSinger && isSlugNameSingerCurrent && isPlaying)
+                    (isSlugNameSinger && isSlugNameSingerCurrent && isPlaying)
                     ? WaveSong
                     : Play,
             border: true,
@@ -99,13 +135,20 @@ export const ActionBtnAlbum = ({
             type: 'play',
         },
         {
-            extraTitle: 'Khác',
-            icon: More,
+            extraTitle: 'Bỏ phiếu',
+            icon: Vote,
             circle_hide: true,
-            type: 'more',
+            type: 'vote',
         },
+        // {
+        //     extraTitle: 'Khác',
+        //     icon: More,
+        //     circle_hide: true,
+        //     type: 'more',
+        // },
     ];
     const onHandle = (e, btn) => {
+
         if (
             (isSlugCategory && isSlugCategoryCurrent && !isPlayingRadio) ||
             (isSlugNameSinger && isSlugNameSingerCurrent && !isPlayingRadio)
@@ -115,23 +158,34 @@ export const ActionBtnAlbum = ({
             e.preventDefault();
             switch (btn.type) {
                 case 'play':
-                    return (
-                        dispatch(radioSlice.actions.setIsPlayingRadio(false)) &&
-                        dispatch(statusSlice.actions.isPlayingChange(!isPlaying))
-                    );
+                    navigate(`/album/${item?.slug_banner_singer_popular ||
+                        item?.slug_banner_album_hot
+                        }`);
+                    // return (
+                    //     dispatch(radioSlice.actions.setIsPlayingRadio(false)) &&
+                    //     dispatch(statusSlice.actions.isPlayingChange(!isPlaying))
+                    // );
+                    break
                 case 'more':
                     e.stopPropagation();
                     handleSelectMoreSong();
                     break;
+                case 'vote':
+                    e.stopPropagation();
+                    setOpenModalVote(true);
+                    break;
                 default:
-                    console.log('default');
             }
         } else {
             switch (btn.type) {
                 case 'play':
-                    if (isLivingAlbum) { 
+                    if (isLivingAlbum) {
+                        navigate(`/album/${item?.slug_banner_singer_popular ||
+                            item?.slug_banner_album_hot
+                            }`);
+
                         const randomID = Math.floor(Math.random() * data?.length);
-                        /*check action in home page  ? if true will update data new song , if false will request play and 
+                        /*check action in home page  ? if true will update data new song , if false will request play and
                         dispath data to album
                          */
                         if (data.length > 0) {
@@ -145,6 +199,10 @@ export const ActionBtnAlbum = ({
                             );
                         }
                     } else {
+                        navigate(`/album/${item?.slug_banner_singer_popular ||
+                            item?.slug_banner_album_hot
+                            }`);
+
                         return dispatch(statusSlice.actions.isRequirePlayChange(true));
                     }
                     break;
@@ -158,8 +216,14 @@ export const ActionBtnAlbum = ({
                     e.preventDefault();
                     handleSelectMoreSong();
                     break;
+                case 'vote':
+                    e.stopPropagation();
+                    e.preventDefault();
+                    setOpenModalVote(true);
+
+                    // handleSelectMoreSong();
+                    break;
                 default:
-                    console.log('default');
             }
         }
     };
@@ -247,6 +311,27 @@ export const ActionBtnAlbum = ({
                             )}
                         </div>
                     );
+                } else if (btn.type === 'vote') {
+                    return (
+                        <div key={index}>
+                            <Button
+                                Icons={btn.icon}
+                                extraTitle={btn.extraTitle}
+                                circle_hide={btn.circle_hide}
+                                border_nothover={btn.border_nothover}
+                                title={item?.title}
+                                onHandle={(e) => onHandle(e, btn)}
+                            />
+                            {isMore && (
+                                <Menu
+                                    items={MENU_SELECT}
+                                    visible={true}
+                                    placement="top-start"
+                                    song={song}
+                                />
+                            )}
+                        </div>
+                    );
                 }
             } else {
                 if (shouldRenderButton) {
@@ -303,7 +388,38 @@ export const ActionBtnAlbum = ({
         }
     }, [isFavorite, callData]);
 
-    return renderBtnHover();
+    return (
+        <>
+            {renderBtnHover()}
+            {
+                item && openModalVote && (
+                    <Modal title={"Bỏ phiếu cho ca sĩ " + item?.name_singer} open={openModalVote} onCancel={(e) => {
+                        e.stopPropagation();
+                        setOpenModalVote(false)
+                    }} onOk={() => { form.submit() }} okText="Bỏ phiếu" cancelText="Hủy">
+                        <div style={{ display: 'flex', justifyContent: 'center' }}>
+                            <Avatar src={item?.src} size={100} />
+                        </div>
+                        <Form form={form} layout='vertical' onFinish={voting}>
+                            {/* // nhập số phiếu */}
+                            <Form.Item label="Số phiếu:" name="vote" rules={[
+                                {
+                                    required: true,
+                                    message: 'Số phiếu không được để trống!',
+                                },
+                            ]}>
+                                <InputNumber style={{ width: '100%' }} />
+                            </Form.Item>
+                        </Form>
+                        <p>
+                            Chào cả nhà. Tôi là ca sĩ {item?.name_singer}. Cuộc thi chính thức của ZingMp3 đã bắt đầu. Tôi đã chuẩn bị tinh thần, hy vọng mọi người đã có giả thưởng. Cả nhà hãy bỏ phiếu cho tôi nhé! {'<3'}
+                        </p>
+                    </Modal>
+                )
+            }
+
+        </>
+    );
 };
 
 ActionBtnAlbum.propTypes = {

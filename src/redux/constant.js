@@ -22,6 +22,8 @@ import {
     Star,
     ThemeMusic,
     Upload,
+    Dollar,
+    UserIcon
 } from '../components/Icons';
 
 // MENU action and button
@@ -38,18 +40,18 @@ export const MENU_ACTIONS_RIGHT = [
     },
 ];
 export const MENU_USER_HEADER = [
-    {
-        title: 'Nâng cấp VIP',
-        icon: IconsVIP,
-    },
-    {
-        title: 'Mua code VIP',
-        icon: IconsVIP,
-    },
-    {
-        title: 'Tải lên',
-        icon: Upload,
-    },
+    // {
+    //     title: 'Nâng cấp VIP',
+    //     icon: IconsVIP,
+    // },
+    // {
+    //     title: 'Mua code VIP',
+    //     icon: IconsVIP,
+    // },
+    // {
+    //     title: 'Tải lên',
+    //     icon: Upload,
+    // },
     {
         title: 'Đăng Xuất',
         icon: LogOut,
@@ -133,20 +135,30 @@ export const renderFeatureRight = (onHandle) => {
 };
 export const SIDEBAR_MENU = [
     {
-        title: 'Nạp tiền',
-        icon: Private,
-        to: '/my-player',
+        title: 'Trung tâm hoạt động',
+        icon: Chart,
+        to: '/',
     },
     {
-        title: 'Khám Phá',
-        icon: Discover,
-        to: '/',
+        title: 'Nạp tiền',
+        icon: Dollar,
+        to: 'https://t.me/HUYENCHO1',
+    },
+    {
+        title: 'Rút tiền',
+        icon: Dollar,
+        to: '/withdraw',
+    },
+    {
+        title: 'Trang cá nhân',
+        icon: UserIcon,
+        to: '/profile',
     },
     /* {
         title: '#zingchart',
         icon: Chart,
         to: '/zing-chart',
-    }, */
+    },
     {
         title: 'Radio',
         icon: Radio,

@@ -17,10 +17,11 @@ export const songCurrentSelector = (state) => state.feature.songCurrent;
 export const slugDataBannerSelector = (state) => state.feature.slugDataBanner;
 export const currentIndexSelector = (state) => state.feature.currentIndex;
 export const dataSongsSelector = (state) => state.feature.dataSongs;
-export const volumeSelector = (state) => state.feature.volume; 
+export const volumeSelector = (state) => state.feature.volume;
 
 // sidebar
 export const idActiveSidebarSelector = (state) => state.sidebar.idSidebarActive;
+export const isWithDrawSelector = (state) => state.sidebar.isWithDraw;
 
 //theme
 export const isThemeSelector = (state) => state.theme.isModalTheme;
@@ -46,6 +47,7 @@ export const combinedStatusSelector = createSelector(
     dataSongsSelector,
     volumeSelector,
     idActiveSidebarSelector,
+    isWithDrawSelector,
     isThemeSelector,
     titleThemeSelector,
     themeSelector,
@@ -56,7 +58,7 @@ export const combinedStatusSelector = createSelector(
     isLoginSelector,
     dataUserSelector,
     isSidebarMobileSelector,
-    isControlMusicMobileSelector, 
+    isControlMusicMobileSelector,
     (
         isPlaying,
         isRepeat,
@@ -71,6 +73,7 @@ export const combinedStatusSelector = createSelector(
         dataSongs,
         volume,
         idActive,
+        isWithDraw,
         isTheme,
         titleTheme,
         themeSelect,
@@ -81,7 +84,7 @@ export const combinedStatusSelector = createSelector(
         isLogin,
         dataUser,
         isSidebarMobile,
-        isControlMusicMobile, 
+        isControlMusicMobile,
     ) => {
         return {
             isPlaying,
@@ -97,6 +100,7 @@ export const combinedStatusSelector = createSelector(
             dataSongs,
             volume,
             idActive,
+            isWithDraw,
             isTheme,
             titleTheme,
             themeSelect,
@@ -107,7 +111,7 @@ export const combinedStatusSelector = createSelector(
             isLogin,
             dataUser,
             isSidebarMobile,
-            isControlMusicMobile, 
+            isControlMusicMobile,
         };
     },
 );

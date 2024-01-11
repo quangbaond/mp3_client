@@ -50,7 +50,6 @@ function ControlsRight({ isMobile, isControlModal }) {
                 dispatch(statusSlice.actions.isPlayingChange(false));
                 break;
             default:
-                console.log('default');
         }
     };
     const handleListQueue = (e) => {
@@ -70,7 +69,7 @@ function ControlsRight({ isMobile, isControlModal }) {
     const lastData = CONTROL_BTNS_RIGHT[CONTROL_BTNS_RIGHT.length - 1].data;
 
     const classes = style ? 'blur_input' : '';
-    
+
     const renderBtnsRight = () => {
         const result = lastData.map((item, index) => {
             return (

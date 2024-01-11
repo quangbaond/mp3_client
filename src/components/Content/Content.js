@@ -6,14 +6,15 @@ function Content() {
     return (
         <div>
             <div>
-                <Trending />
-            </div>
-            <div>
                 <Container
                     listData={BANNER_SINGER_POPULAR}
                     titleSection="Nghệ Sĩ Thịnh Hành"
                 />
             </div>
+            <div style={{ marginTop: "20px" }}>
+                <Trending />
+            </div>
+
             <div>
                 <Container listData={BANNER_ALBUM_HOT} titleSection="Album Hot" />
             </div>

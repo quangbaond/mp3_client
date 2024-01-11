@@ -14,9 +14,11 @@ import ModalTheme from '../ModalTheme/ModalTheme';
 import MvPlayer from '../MvPlayer/MvPlayer';
 import styles from './Wrapper.module.scss';
 
+
 const cx = classNames.bind(styles);
 function Wrapper({ children }) {
     const dispatch = useDispatch();
+
 
     const { isTheme, isMvPlayer, isPlayerQueue, isLogin, themeSelect, dataUser } =
         useSelector(combinedStatusSelector);
@@ -88,8 +90,8 @@ function Wrapper({ children }) {
         if (dataUser.accessToken) {
             const fetch = async () => {
                 const result = await getProfileUser(dataUser.accessToken).then((data) => {
-                    dispatch(loginSlice.actions.setAccessToken(data.accessToken));
-                    dispatch(loginSlice.actions.setDataUser(data.data));
+                    // dispatch(loginSlice.actions.setAccessToken(data.accessToken));
+                    dispatch(loginSlice.actions.setDataUser(data.user));
                     dispatch(loginSlice.actions.setIsLogin(false));
                 });
                 return result;
@@ -100,20 +102,24 @@ function Wrapper({ children }) {
     }, [dataUser.accessToken, dispatch]);
 
     return (
-        <div className={cx('wrapper')}>
-            <ToastContainer
-                theme="light"
-                position="top-left"
-                limit={3}
-                autoClose={3000}
-                className={cx('toast_msg')}
-            />
-            {children}
-            {isTheme && <ModalTheme />}
-            {isMvPlayer && <MvPlayer />}
-            {isPlayerQueue && <ListQueue />}
-            {isLogin && <Form />}
-        </div>
+        <>
+            <div className={cx('wrapper')}>
+                <ToastContainer
+                    theme="light"
+                    position="top-left"
+                    limit={3}
+                    autoClose={3000}
+                    className={cx('toast_msg')}
+                />
+                {children}
+                {isTheme && <ModalTheme />}
+                {isMvPlayer && <MvPlayer />}
+                {isPlayerQueue && <ListQueue />}
+                {isLogin && <Form />}
+            </div>
+        </>
+
+
     );
 }
 

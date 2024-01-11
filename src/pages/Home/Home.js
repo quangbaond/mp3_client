@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -9,13 +9,13 @@ import Footer from '../../components/Footer/Footer';
 import { sidebarSlice } from '../../redux/sliceReducer';
 import { combinedStatusSelector } from '../../redux/selector';
 import SliderSlick from '../../layouts/components/Sliderslick';
-
 const cx = classNames.bind(styles);
 
 function Home() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { songCurrent } = useSelector(combinedStatusSelector);
+    const { songCurrent, isWithDraw } = useSelector(combinedStatusSelector);
+
     useEffect(() => {
         if (!songCurrent) {
             navigate('..');

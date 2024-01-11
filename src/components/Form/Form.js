@@ -150,7 +150,7 @@ function Form() {
                 toast.success('Tạo tài khoản thành công !!!');
                 setIsLogin(true);
             } catch (error) {
-                if (error.response.status === 400) {
+                if (error.response.status === 422) {
                     toast.info('Tài khoản đã tồn tại !!!');
                 }
             }
@@ -169,8 +169,14 @@ function Form() {
             setLoadingForm(true);
             try {
                 const response = await getUserLogin(email, password);
-                dispatch(loginSlice.actions.setDataUser(response.data));
-                dispatch(loginSlice.actions.setAccessToken(response?.data?.jwt?.access_token));
+                const data = await response.data;
+                const { access_token } = data.jwt;
+                const user = {
+                    ...data,
+                    accessToken: access_token,
+                }
+                dispatch(loginSlice.actions.setDataUser(user));
+                dispatch(loginSlice.actions.setAccessToken(access_token));
                 toast.success('Đăng nhập thành công !!!');
             } catch (err) {
                 if (err.response.status === 400) {

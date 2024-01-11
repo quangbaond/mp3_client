@@ -41,7 +41,7 @@ function SliderSlick() {
             drag: false,
 
             slides: {
-                perView: 3,
+                perView: 5,
                 spacing: 15,
             },
             breakpoints: {
@@ -54,7 +54,7 @@ function SliderSlick() {
                     slides: { perView: 2, spacing: 10 },
                 },
                 '(min-width: 1130px)': {
-                    slides: { perView: 3, spacing: 15 },
+                    slides: { perView: 4, spacing: 15 },
                 },
             },
         },

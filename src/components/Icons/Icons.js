@@ -22,6 +22,7 @@ import {
     faXmark,
     faChevronLeft,
     faChevronRight,
+    faVoteYea
 } from '@cseitz/fontawesome-svg-light';
 import { faEye, faHeart, faWindowRestore } from '@fortawesome/free-regular-svg-icons';
 import {
@@ -70,6 +71,17 @@ export const DowloadIcon = () => {
         </svg>
     );
 };
+export const UserIcon = () => {
+    return (
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+            <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M10 2.5C7.51472 2.5 5.5 4.51472 5.5 7C5.5 9.48528 7.51472 11.5 10 11.5C12.4853 11.5 14.5 9.48528 14.5 7C14.5 4.51472 12.4853 2.5 10 2.5ZM10 4.5C11.6569 4.5 13 5.84315 13 7C13 8.15685 11.6569 9.5 10 9.5C8.34315 9.5 7 8.15685 7 7C7 5.84315 8.34315 4.5 10 4.5ZM10 12.5C6.96243 12.5 4.5 14.9624 4.5 18H15.5C15.5 14.9624 13.0376 12.5 10 12.5Z"
+            ></path>
+        </svg>
+    );
+}
 export const Setting = () => {
     return <FontAwesomeIcon icon={faGear} />;
 };
@@ -134,6 +146,12 @@ export const Discover = () => {
                 d="M2.70831 9.99998C2.70831 5.9729 5.9729 2.70831 9.99997 2.70831C14.027 2.70831 17.2916 5.9729 17.2916 9.99998C17.2916 14.0271 14.027 17.2916 9.99997 17.2916C5.9729 17.2916 2.70831 14.0271 2.70831 9.99998ZM9.99997 1.45832C5.28254 1.45832 1.45831 5.28255 1.45831 9.99998C1.45831 14.7174 5.28254 18.5416 9.99997 18.5416C14.7174 18.5416 18.5416 14.7174 18.5416 9.99998C18.5416 5.28255 14.7174 1.45832 9.99997 1.45832ZM7.70832 9.99999C7.70832 8.73433 8.73433 7.70832 9.99998 7.70832C11.2656 7.70832 12.2916 8.73433 12.2916 9.99999C12.2916 11.2656 11.2656 12.2917 9.99998 12.2917C8.73433 12.2917 7.70832 11.2656 7.70832 9.99999ZM9.99998 6.45832C8.04397 6.45832 6.45832 8.04398 6.45832 9.99999C6.45832 11.956 8.04397 13.5417 9.99998 13.5417C11.956 13.5417 13.5416 11.956 13.5416 9.99999C13.5416 8.04398 11.956 6.45832 9.99998 6.45832Z"
             ></path>
         </svg>
+    );
+};
+
+export const Dollar = () => {
+    return (
+        <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-dollar-sign"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
     );
 };
 
@@ -303,6 +321,9 @@ export const HeartFull = () => {
 };
 export const More = () => {
     return <FontAwesomeIcon icon={faEllipsis} />;
+};
+export const Vote = () => {
+    return <FontAwesomeIcon icon={faVoteYea} />;
 };
 export const Random = () => {
     return <FontAwesomeIcon icon={faShuffle} />;

@@ -7,6 +7,10 @@ export const privateRoutes = [
         component: config.home.component,
     },
     {
+        path: config.withdraw.path,
+        component: config.withdraw.component,
+    },
+    {
         path: config.myplayer.path,
         component: config.myplayer.component,
     },

@@ -24,5 +24,10 @@ export const loginSlice = createSlice({
         setListSongFavorite: (state, action) => {
             state.user.listFavorite = action.payload;
         },
+
+        setBalance: (state, action) => {
+            console.log(action.payload);
+            state.user.data.balance = action.payload;
+        },
     },
 });

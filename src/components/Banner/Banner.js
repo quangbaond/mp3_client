@@ -14,7 +14,7 @@ import styles from './Banner.module.scss';
 const cx = classNames.bind(styles);
 
 // Component render img banner on home page and albumpage
-function Banner({ item, index, data, isLivingAlbum, singleBtn, isPodcast }) {
+function Banner({ item, index, data, isLivingAlbum, singleBtn, isPodcast, isRate }) {
     const [indexHover, setIndexHover] = useState(false);
     const [isHover, setIsHover] = useState(false);
     const { slugDataBanner, isPlaying, songCurrent, isLoadingPage } =
@@ -97,17 +97,18 @@ function Banner({ item, index, data, isLivingAlbum, singleBtn, isPodcast }) {
                         <Images src={item?.src || item.thumbnailM} />
                     </figure>
                 ) : (
-                    <Link
-                        to={`/album/${
-                            item?.slug_banner_singer_popular ||
+                    <div
+                        to={`/album/${item?.slug_banner_singer_popular ||
                             item?.slug_banner_album_hot
-                        }`}
+                            }`}
+                        // to=""
                         state={{
                             src: item?.src,
                             title: item?.title,
                             slug_banner_singer_popular: item?.slug_banner_singer_popular,
                             slug_banner_album_hot: item?.slug_banner_album_hot,
                             isBannerAlbumHot: item?.slug_banner_album_hot ? true : false,
+                            url: item?.slug_banner_singer_popular ? `/album/${item?.slug_banner_singer_popular}` : `/album/${item?.slug_banner_album_hot}`,
                         }}
                     >
                         <figure className={cx('item_img')}>
@@ -128,17 +129,16 @@ function Banner({ item, index, data, isLivingAlbum, singleBtn, isPodcast }) {
                                 />
                             )}
                         </div>
-                    </Link>
+                    </div>
                 )}
             </div>
             {!isLivingAlbum && !isPodcast && (
                 <div>
                     <Link
                         title={item.title}
-                        to={`album/${
-                            item?.slug_banner_singer_popular ||
+                        to={`album/${item?.slug_banner_singer_popular ||
                             item?.slug_banner_album_hot
-                        }`}
+                            }`}
                         state={{
                             src: item.src,
                             title: item.title,

@@ -165,14 +165,14 @@ function Header({ styles, isScrollHeader }) {
                                 </div>
                             </div>
                             <div className={cx('button_controls_right')}>
-                                <Button
+                                {/* <Button
                                     className={cx('btn_download')}
                                     primary
                                     LeftIcons={DowloadIcon}
                                     sizes="normal"
                                 >
                                     Dowload
-                                </Button>
+                                </Button> */}
                                 <Button
                                     circle
                                     Icons={ButtonTheme}
@@ -180,19 +180,19 @@ function Header({ styles, isScrollHeader }) {
                                     onHandle={onChangeTheme}
                                 />
 
-                                <Button
+                                {/* <Button
                                     circle
                                     Icons={IconsVIP}
                                     extraTitle={'Nâng cấp VIP'}
-                                />
+                                /> */}
 
-                                <Menu items={MENU_SETTING_HEADER}>
+                                {/* <Menu items={MENU_SETTING_HEADER}>
                                     <Button
                                         circle
                                         Icons={Setting}
                                         extraTitle={'Cài đặt'}
                                     />
-                                </Menu>
+                                </Menu> */}
 
                                 {dataUser.accessToken ? (
                                     <Menu items={MENU_USER_HEADER} visible={false}>

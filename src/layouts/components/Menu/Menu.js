@@ -28,13 +28,13 @@ function Menu({
 }) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [visiblecheck, setVisible] = useState(false); /* 
+    const [visiblecheck, setVisible] = useState(false); /*
     const [currentItem, setCurrentItem] = useState([{ data: items }]); */
     const currentItem = [{ data: items }];
     const lastItemMenu = currentItem[currentItem.length - 1];
     const favorite = convertNumber(song?.favorite);
     const view = convertNumber(song?.view);
- 
+
     const handleClick = () => {
         if (!nestest) {
             setVisible(!visiblecheck);
@@ -69,7 +69,6 @@ function Menu({
                 handleDownloadSong();
                 break;
             default:
-                console.log('default');
         }
     };
     const resultSetting = listRender.data.map((item, index) => {

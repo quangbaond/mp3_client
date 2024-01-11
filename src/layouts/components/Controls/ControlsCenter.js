@@ -97,7 +97,6 @@ function ControlsCenter({
                 dispatch(statusSlice.actions.isRandomChange(!isRandom));
                 break;
             default:
-                console.log('default');
         }
     };
     // control main handle
@@ -122,8 +121,8 @@ function ControlsCenter({
                             ? Pause
                             : Play
                         : isPlaying && !isLoading
-                        ? Pause
-                        : Play,
+                            ? Pause
+                            : Play,
                     iconLoading: isLoading ? Loading : undefined,
                     border: true,
                     circle_hide: true,

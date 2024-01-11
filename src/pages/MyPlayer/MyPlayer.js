@@ -38,18 +38,18 @@ function MyPlayer() {
     ];
     useEffect(() => {
         // fake loadingpage to take data user from profile
-        if (dataUser.accessToken) {
+        if (dataUser?.jwt?.access_token) {
             dispatch(statusSlice.actions.isPageLoadingChange(true));
             const fetch = async () => {
-                await getProfileUser(dataUser.accessToken);
+                await getProfileUser(dataUser?.jwt?.access_token);
                 dispatch(statusSlice.actions.isPageLoadingChange(false));
             };
             fetch();
             dispatch(sidebarSlice.actions.setIdSidebarActive(0));
         } else {
             navigate('..');
-            dispatch(sidebarSlice.actions.setIdSidebarActive(1)); 
-            dispatch(loginSlice.actions.setIsLogin(true)); 
+            dispatch(sidebarSlice.actions.setIdSidebarActive(1));
+            dispatch(loginSlice.actions.setIsLogin(true));
             toast.info('Vui lòng đăng nhập để sử dụng chức năng này!');
         }
     }, []);

@@ -19,12 +19,12 @@ const cx = classNames.bind(styles);
 function Sidebar() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { idActive, dataUser, isSidebarMobile } = useSelector(combinedStatusSelector);
+    const { idActive, dataUser, isSidebarMobile, isWithDraw } = useSelector(combinedStatusSelector);
     const [isOpenSideBar, setOpenSideBar] = useState(false);
     const imgError =
         'https://digimedia.web.ua.pt/wp-content/uploads/2017/05/default-user-image.png';
 
-     
+
     const RenderMenuMain = ({ isTablet }) => {
         const result = SIDEBAR_MENU.map((item, index) => {
             const handleClickActive = (e, index) => {
@@ -33,9 +33,8 @@ function Sidebar() {
                     e.currentTarget.dataset.index !== index.toString()
                 ) {
                     dispatch(sidebarSlice.actions.setIdSidebarActive(null));
-
-                    // if lastEl active will off when nextEl active
-                } else {
+                }
+                else {
                     dispatch(sidebarSlice.actions.setIdSidebarActive(index));
                 }
                 dispatch(statusSlice.actions.isSidebarMobile(false));
