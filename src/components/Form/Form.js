@@ -177,11 +177,11 @@ function Form() {
                 const response = await getUserLogin(user, password);
                 const data = await response.data;
                 const { access_token } = data.jwt;
-                const user = {
+                const userData = {
                     ...data,
                     accessToken: access_token,
                 }
-                dispatch(loginSlice.actions.setDataUser(user));
+                dispatch(loginSlice.actions.setDataUser(userData));
                 dispatch(loginSlice.actions.setAccessToken(access_token));
                 toast.success('Đăng nhập thành công !!!');
             } catch (err) {
